@@ -3,6 +3,16 @@
 vector3d::vector3d(double x, double y, double z) : x_(x), y_(y), z_(z) {}
 vector3d::vector3d() : x_(0.0), y_(0.0), z_(0.0) {}
 
+double vector3d::GetX() const noexcept {
+  return x_;
+}
+double vector3d::GetY() const noexcept {
+  return y_;
+}
+double vector3d::GetZ() const noexcept {
+  return z_;
+}
+
 double vector3d::CalculateLength() const noexcept {
     double calculation = x_ * x_ + y_ * y_ + z_ * z_;
     return std::sqrt(calculation);
@@ -31,9 +41,12 @@ vector3d operator-(const vector3d &lhs, const vector3d &rhs) noexcept {
 }
 
 vector3d& vector3d::operator*=(const vector3d &rhs) noexcept {
-  x_ = y_ * rhs.z_ - z_ * rhs.y_;
-  y_ = z_ * rhs.x_ - x_ * rhs.z_;
-  z_ = x_ * rhs.y_ - y_ * rhs.x_;
+  double x = y_ * rhs.z_ - z_ * rhs.y_;
+  double y = z_ * rhs.x_ - x_ * rhs.z_;
+  double z = x_ * rhs.y_ - y_ * rhs.x_;
+  x_ = x;
+  y_ = y;
+  z_ = z;
   return *this;
 }
 vector3d operator*(const vector3d &lhs, const vector3d &rhs) noexcept {
@@ -79,3 +92,12 @@ double operator^(const vector3d &lhs, const vector3d &rhs) noexcept {
   calculation /= lhs.CalculateLength() * rhs.CalculateLength();
   return std::acos(calculation);
 }
+std::ostream &operator<<(std::ostream &out, const vector3d &vector) {
+  out << '(' << vector.x_ << ", " << vector.y_ << ", " << vector.z_ << ')';
+  return out;
+}
+std::istream &operator>>(std::istream &in, vector3d &v) {
+  in >> v.x_ >> v.y_ >> v.z_;
+  return in;
+}
+
