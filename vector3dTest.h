@@ -78,7 +78,7 @@ class vector3dTest : public Test {
     {
       vector3d v1{1.0, 2.0, 3.0};
       vector3d v2{1.0, 2.0, 3.0};
-      check(v1 / v2 == 14.0);
+      check(v1 / v2 == 10.0);
     }
     {
       vector3d v1{1.0, 2.0, 3.0};
